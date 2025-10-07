@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: test-cronjob
+  namespace: cronjob-testing
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: cronjob-pod
+              image: alpine
+              args:
+              - /bin/sh
+              - -c
+              - cd /mnt; date >> plik.txt
+              resources:
+                requests:
+                  memory: "256Mi"
+                  cpu: "250m"
+                limits:
+                  memory: "512Mi"
+                  cpu: "500m"
+              volumeMounts:
+                    - mountPath: /mnt
+                      name: cronjob-data
+          restartPolicy: OnFailure
+          volumes:
+                - name: cronjob-data
+                  persistentVolumeClaim:
+                    claimName: cronjob-volume-claim
