@@ -6,8 +6,8 @@ Vagrant.configure("2") do |config|
   config.vm.box = "bento/ubuntu-22.04"
   config.vm.hostname = "kubernetes-workshops"
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = 2048
-    vb.cpus = 2
+    vb.memory = 4096
+    vb.cpus = 4
   end
   config.vm.network "private_network", ip: "192.168.56.20"
   config.vm.network "forwarded_port", guest: 22, host: 2200, id: "ssh"
