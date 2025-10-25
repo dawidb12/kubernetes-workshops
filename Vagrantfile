@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
     chmod 644 /usr/lib/systemd/system/minikube.service
     apt-get update
     sudo apt remove -y docker docker.io
-    sudo apt install -y apt-transport-https ca-certificates curl software-properties-common gnupg
+    sudo apt install -y apt-transport-https ca-certificates curl gpg software-properties-common gnupg
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
     sudo apt update
@@ -38,7 +38,6 @@ Vagrant.configure("2") do |config|
     systemctl enable minikube
     systemctl start minikube
     sudo -u vagrant minikube addons enable ingress
-    sudo apt-get install curl gpg apt-transport-https --yes
     curl -fsSL https://packages.buildkite.com/helm-linux/helm-debian/gpgkey | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
     echo "deb [signed-by=/usr/share/keyrings/helm.gpg] https://packages.buildkite.com/helm-linux/helm-debian/any/ any main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
     apt-get update
